@@ -38,11 +38,15 @@ namespace DampDepths
                     {
                         if (tunnelDCPP.TryGetComponent(out PostProcessVolume ppvTunnel))
                         {
-                            ppvTunnel.sharedProfile = Addressables.LoadAssetAsync<PostProcessProfile>("RoR2/Base/title/ppSceneDampcave.asset").WaitForCompletion();
-                            if (ppvTunnel.profile.TryGetSettings(out RampFog rampFog))
+                            PostProcessProfile ppp = Addressables.LoadAssetAsync<PostProcessProfile>("RoR2/Base/title/PostProcessing/ppSceneDampcave.asset").WaitForCompletion();
+                            if (ppp != null)
                             {
-                                rampFog.fogPower.Override(0.49f);
-                                rampFog.fogOne.Override(0.154f);
+                                ppvTunnel.sharedProfile = ppp;
+                                if (ppvTunnel.profile.TryGetSettings(out RampFog rampFog))
+                                {
+                                    rampFog.fogPower.Override(0.49f);
+                                    rampFog.fogOne.Override(0.154f);
+                                }
                             }
                         }
                     }
@@ -50,11 +54,15 @@ namespace DampDepths
 
                 if(SceneInfo.instance.TryGetComponent(out PostProcessVolume ppv))
                 {
-                    ppv.sharedProfile = Addressables.LoadAssetAsync<PostProcessProfile>("RoR2/Base/title/ppSceneDampcave.asset").WaitForCompletion();
-                    if (ppv.profile.TryGetSettings(out RampFog rampFog))
+                    PostProcessProfile ppp = Addressables.LoadAssetAsync<PostProcessProfile>("RoR2/Base/title/PostProcessing/ppSceneDampcave.asset").WaitForCompletion();
+                    if(ppp != null)
                     {
-                        rampFog.fogPower.Override(1f);
-                        rampFog.fogOne.Override(0.3f);
+                        ppv.sharedProfile = ppp;
+                        if (ppv.profile.TryGetSettings(out RampFog rampFog))
+                        {
+                            rampFog.fogPower.Override(1f);
+                            rampFog.fogOne.Override(0.3f);
+                        }
                     }
                 }
             }
